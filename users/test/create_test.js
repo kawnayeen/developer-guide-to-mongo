@@ -2,10 +2,9 @@ const assert = require('assert');
 const User = require('../src/user');
 
 describe('Creating records', () => {
-    it('saves a user', () => {
-        setTimeout(()=>{
-            const joe = new User({name: 'Joe'});
-            joe.save();
-        }, 2000);
+    it('saves a user', async () => {
+        const joe = new User({name: 'kamarul'});
+        await joe.save();
+        assert(!joe.isNew);
     });
 });
