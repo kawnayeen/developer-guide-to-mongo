@@ -13,4 +13,9 @@ describe('Reading users out of the database', () => {
         const allUser = await User.find({name: 'Joe'});
         assert(allUser[0]._id.toString() === joe._id.toString());
     });
+
+    it('find a user with particular id', async () => {
+        const fetchedUser = await User.findOne({_id: joe._id});
+        assert(fetchedUser.name === 'Joe');
+    });
 });
