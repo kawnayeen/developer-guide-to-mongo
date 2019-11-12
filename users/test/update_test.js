@@ -25,4 +25,19 @@ describe('Updating a user', () => {
         await joe.update({name: 'Alex'});
         await assertName();
     });
+
+    it('A model class can update', async  () => {
+        await User.update({name: 'Joe'}, {name: 'Alex'});
+        await assertName();
+    });
+
+    it('A model class can update one record', async () => {
+        await User.findOneAndUpdate({name: 'Joe'}, {name: 'Alex'});
+        await assertName();
+    });
+
+    it('A model class can find a record with an ID and update', async () => {
+        await User.findByIdAndUpdate(joe._id, {name: 'Alex'});
+        await assertName();
+    });
 });
