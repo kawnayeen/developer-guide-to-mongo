@@ -5,7 +5,7 @@ describe('Updating a user', () => {
     let joe;
 
     beforeEach(async () => {
-        joe = new User({name: 'Joe'});
+        joe = new User({name: 'Joe', postCount: 0});
         await joe.save();
     });
 
@@ -15,7 +15,7 @@ describe('Updating a user', () => {
         assert(users[0].name === 'Alex');
     }
 
-    it('instance type using set n save',async () => {
+    it('instance type using set n save', async () => {
         joe.set('name', 'Alex');
         await joe.save();
         await assertName();
@@ -26,7 +26,7 @@ describe('Updating a user', () => {
         await assertName();
     });
 
-    it('A model class can update', async  () => {
+    it('A model class can update', async () => {
         await User.update({name: 'Joe'}, {name: 'Alex'});
         await assertName();
     });
@@ -39,5 +39,11 @@ describe('Updating a user', () => {
     it('A model class can find a record with an ID and update', async () => {
         await User.findByIdAndUpdate(joe._id, {name: 'Alex'});
         await assertName();
+    });
+
+    it('A user can have their postcount incremented by 1', async () => {
+        await User.update({name: 'Joe'}, {$inc: {postCount: 1}});
+        const fetchedUser = await User.findOne({name: 'Joe'});
+        assert(fetchedUser.postCount === 1);
     });
 });
